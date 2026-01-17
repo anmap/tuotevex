@@ -14,7 +14,7 @@ const goBack = () => {
 </script>
 
 <template>
-  <div class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4"
+  <div class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center"
     aria-labelledby="not-found-heading">
     <div class="text-center">
       <!-- Screen reader announcement -->
@@ -32,12 +32,11 @@ const goBack = () => {
         </div>
       </div>
 
-      <!-- Heading -->
+      <!-- Error heading and description -->
       <h1 id="not-found-heading" class="font-title text-3xl font-bold text-gray-900 sm:text-4xl">
         Oops! Page not found
       </h1>
 
-      <!-- Description -->
       <p class="mt-4 text-base text-gray-600 sm:text-lg">
         It looks like the link you followed is broken or the page has been moved. Let's get you back
         on track.
