@@ -103,53 +103,53 @@ describe('ProductCard', () => {
       expect(stockElement.exists()).toBe(true)
     })
 
-    it('displays "+10 in stock" with green color when stock is 10', () => {
+    it('displays "+10 in stock" with primary color when stock is 10', () => {
       const product = { ...mockProduct, stock: 10 }
       const wrapper = mount(ProductCard, {
         props: { product },
       })
       expect(wrapper.text()).toContain('+10 in stock')
-      const stockElement = wrapper.find('[class*="text-green"]')
+      const stockElement = wrapper.find('[class*="text-primary"]')
       expect(stockElement.exists()).toBe(true)
     })
 
-    it('displays "+25 in stock" with green color when stock is 25', () => {
+    it('displays "+25 in stock" with primary color when stock is 25', () => {
       const product = { ...mockProduct, stock: 25 }
       const wrapper = mount(ProductCard, {
         props: { product },
       })
       expect(wrapper.text()).toContain('+25 in stock')
-      const stockElement = wrapper.find('[class*="text-green"]')
+      const stockElement = wrapper.find('[class*="text-primary"]')
       expect(stockElement.exists()).toBe(true)
     })
 
-    it('displays "+50 in stock" with green color when stock is 50', () => {
+    it('displays "+50 in stock" with primary color when stock is 50', () => {
       const product = { ...mockProduct, stock: 50 }
       const wrapper = mount(ProductCard, {
         props: { product },
       })
       expect(wrapper.text()).toContain('+50 in stock')
-      const stockElement = wrapper.find('[class*="text-green"]')
+      const stockElement = wrapper.find('[class*="text-primary"]')
       expect(stockElement.exists()).toBe(true)
     })
 
-    it('displays "+100 in stock" with green color when stock is 100', () => {
+    it('displays "+100 in stock" with primary color when stock is 100', () => {
       const product = { ...mockProduct, stock: 100 }
       const wrapper = mount(ProductCard, {
         props: { product },
       })
       expect(wrapper.text()).toContain('+100 in stock')
-      const stockElement = wrapper.find('[class*="text-green"]')
+      const stockElement = wrapper.find('[class*="text-primary"]')
       expect(stockElement.exists()).toBe(true)
     })
 
-    it('displays "+100 in stock" with green color when stock exceeds 100', () => {
+    it('displays "+100 in stock" with primary color when stock exceeds 100', () => {
       const product = { ...mockProduct, stock: 150 }
       const wrapper = mount(ProductCard, {
         props: { product },
       })
       expect(wrapper.text()).toContain('+100 in stock')
-      const stockElement = wrapper.find('[class*="text-green"]')
+      const stockElement = wrapper.find('[class*="text-primary"]')
       expect(stockElement.exists()).toBe(true)
     })
   })
