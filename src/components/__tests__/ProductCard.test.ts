@@ -6,7 +6,8 @@ import fallbackImage from '@/assets/logo.svg'
 const mockProduct = {
   id: '1',
   title: 'Ultra Volume Intense Mascara',
-  category: 'BEAUTY',
+  brand: 'Beauty Brand',
+  sku: 'BEA-001-UVIM',
   price: 12.50,
   rating: 4.5,
   reviews: 856,
@@ -30,11 +31,49 @@ describe('ProductCard', () => {
     expect(wrapper.text()).toContain('Ultra Volume Intense Mascara')
   })
 
-  it('displays category', () => {
+  it('displays SKU under product title', () => {
     const wrapper = mount(ProductCard, {
       props: { product: mockProduct },
     })
-    expect(wrapper.text()).toContain('BEAUTY')
+    expect(wrapper.text()).toContain('BEA-001-UVIM')
+    // Verify SKU appears after title
+    const text = wrapper.text()
+    const titleIndex = text.indexOf('Ultra Volume Intense Mascara')
+    const skuIndex = text.indexOf('BEA-001-UVIM')
+    expect(skuIndex).toBeGreaterThan(titleIndex)
+  })
+
+  it('displays SKU with proper accessibility attributes', () => {
+    const wrapper = mount(ProductCard, {
+      props: { product: mockProduct },
+    })
+    const skuElement = wrapper.find('[aria-label*="SKU"]')
+    expect(skuElement.exists()).toBe(true)
+    expect(skuElement.text()).toContain('BEA-001-UVIM')
+  })
+
+  it('displays brand when provided', () => {
+    const wrapper = mount(ProductCard, {
+      props: { product: mockProduct },
+    })
+    expect(wrapper.text()).toContain('Beauty Brand')
+    const brandElement = wrapper.find('[aria-label*="Brand"]')
+    expect(brandElement.exists()).toBe(true)
+    expect(brandElement.text()).toBe('Beauty Brand')
+  })
+
+  it('displays "No brand" when brand is not provided', () => {
+    const productWithoutBrand = {
+      ...mockProduct,
+      brand: undefined,
+    }
+    const wrapper = mount(ProductCard, {
+      props: { product: productWithoutBrand },
+    })
+    expect(wrapper.text()).toContain('No brand')
+    const brandElement = wrapper.find('[aria-label="No brand"]')
+    expect(brandElement.exists()).toBe(true)
+    expect(brandElement.text()).toBe('No brand')
   })
 
   it('displays price', () => {
