@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { Star } from 'lucide-vue-next'
-import { formatPrice, renderStars } from '@/utils'
+import { formatPrice } from '@/utils'
+import StarRating from '@/components/StarRating.vue'
 import fallbackImage from '@/assets/logo.svg'
 
 interface Product {
@@ -27,8 +27,6 @@ const handleImageError = () => {
 }
 
 const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
-
-const stars = computed(() => renderStars(props.product.rating));
 
 const thresholds = [
   { min: 100, text: '+100' },
@@ -74,13 +72,7 @@ const stockInfo = computed(() => {
       <h3 class="font-bold text-lg mb-2">{{ product.title }}</h3>
       <!-- Product rating -->
       <div class="flex items-center gap-1 mb-2">
-        <template v-for="i in stars.fullStars" :key="`full-${i}`">
-          <Star class="w-4 h-4 fill-yellow-400 text-yellow-400" />
-        </template>
-        <Star v-if="stars.hasHalfStar" class="w-4 h-4 fill-yellow-400 text-yellow-400 opacity-50" />
-        <template v-for="i in stars.emptyStars" :key="`empty-${i}`">
-          <Star class="w-4 h-4 text-gray-300" />
-        </template>
+        <StarRating :rating="product.rating" />
         <span class="text-sm text-gray-600 ml-1">({{ product.reviews }} reviews)</span>
       </div>
       <!-- Product description -->
