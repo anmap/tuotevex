@@ -12,6 +12,7 @@ const mockProduct = {
   reviews: 856,
   description: 'Instant lash lift and ultra volume with a deep black finish.',
   image: '/path/to/image.jpg',
+  stock: 100,
 }
 
 describe('ProductCard', () => {
@@ -79,5 +80,77 @@ describe('ProductCard', () => {
     await img.trigger('error')
 
     expect(img.attributes('src')).toBe(fallbackImage)
+  })
+
+  describe('stock display', () => {
+    it('displays "Out of stock" with red color when stock is 0', () => {
+      const product = { ...mockProduct, stock: 0 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('Out of stock')
+      const stockElement = wrapper.find('[class*="text-red"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "Only X in stock" with orange color when stock is between 1 and 9', () => {
+      const product = { ...mockProduct, stock: 5 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('Only 5 in stock')
+      const stockElement = wrapper.find('[class*="text-orange"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "+10 in stock" with green color when stock is 10', () => {
+      const product = { ...mockProduct, stock: 10 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('+10 in stock')
+      const stockElement = wrapper.find('[class*="text-green"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "+25 in stock" with green color when stock is 25', () => {
+      const product = { ...mockProduct, stock: 25 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('+25 in stock')
+      const stockElement = wrapper.find('[class*="text-green"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "+50 in stock" with green color when stock is 50', () => {
+      const product = { ...mockProduct, stock: 50 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('+50 in stock')
+      const stockElement = wrapper.find('[class*="text-green"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "+100 in stock" with green color when stock is 100', () => {
+      const product = { ...mockProduct, stock: 100 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('+100 in stock')
+      const stockElement = wrapper.find('[class*="text-green"]')
+      expect(stockElement.exists()).toBe(true)
+    })
+
+    it('displays "+100 in stock" with green color when stock exceeds 100', () => {
+      const product = { ...mockProduct, stock: 150 }
+      const wrapper = mount(ProductCard, {
+        props: { product },
+      })
+      expect(wrapper.text()).toContain('+100 in stock')
+      const stockElement = wrapper.find('[class*="text-green"]')
+      expect(stockElement.exists()).toBe(true)
+    })
   })
 })
