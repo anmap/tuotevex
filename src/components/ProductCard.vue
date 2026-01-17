@@ -28,6 +28,15 @@ const handleImageError = () => {
 
 const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
 
+const stars = computed(() => renderStars(props.product.rating));
+
+const thresholds = [
+  { min: 100, text: '+100' },
+  { min: 50, text: '+50' },
+  { min: 25, text: '+25' },
+  { min: 10, text: '+10' },
+]
+
 const stockInfo = computed(() => {
   const stock = props.product.stock
 
@@ -40,14 +49,6 @@ const stockInfo = computed(() => {
   if (stock > 0 && stock < 10) {
     return { text: `Only ${stock} in stock`, color: 'text-orange-500' }
   }
-
-  // Threshold-based display
-  const thresholds = [
-    { min: 100, text: '+100' },
-    { min: 50, text: '+50' },
-    { min: 25, text: '+25' },
-    { min: 10, text: '+10' },
-  ]
 
   const threshold = thresholds.find((t) => stock >= t.min)
   if (threshold) {
@@ -73,12 +74,11 @@ const stockInfo = computed(() => {
       <h3 class="font-bold text-lg mb-2">{{ product.title }}</h3>
       <!-- Product rating -->
       <div class="flex items-center gap-1 mb-2">
-        <template v-for="i in renderStars(product.rating).fullStars" :key="`full-${i}`">
+        <template v-for="i in stars.fullStars" :key="`full-${i}`">
           <Star class="w-4 h-4 fill-yellow-400 text-yellow-400" />
         </template>
-        <Star v-if="renderStars(product.rating).hasHalfStar"
-          class="w-4 h-4 fill-yellow-400 text-yellow-400 opacity-50" />
-        <template v-for="i in renderStars(product.rating).emptyStars" :key="`empty-${i}`">
+        <Star v-if="stars.hasHalfStar" class="w-4 h-4 fill-yellow-400 text-yellow-400 opacity-50" />
+        <template v-for="i in stars.emptyStars" :key="`empty-${i}`">
           <Star class="w-4 h-4 text-gray-300" />
         </template>
         <span class="text-sm text-gray-600 ml-1">({{ product.reviews }} reviews)</span>
