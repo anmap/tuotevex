@@ -13,6 +13,7 @@ interface Product {
   reviews: number
   description: string
   image?: string
+  stock: number
 }
 
 const props = defineProps<{
@@ -26,6 +27,36 @@ const handleImageError = () => {
 }
 
 const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
+
+const stockInfo = computed(() => {
+  const stock = props.product.stock
+
+  // Out of stock
+  if (stock === 0) {
+    return { text: 'Out of stock', color: 'text-red-600' }
+  }
+
+  // Low stock
+  if (stock > 0 && stock < 10) {
+    return { text: `Only ${stock} in stock`, color: 'text-orange-500' }
+  }
+
+  // Threshold-based display
+  const thresholds = [
+    { min: 100, text: '+100' },
+    { min: 50, text: '+50' },
+    { min: 25, text: '+25' },
+    { min: 10, text: '+10' },
+  ]
+
+  const threshold = thresholds.find((t) => stock >= t.min)
+  if (threshold) {
+    return { text: `${threshold.text} in stock`, color: 'text-green-600' }
+  }
+
+  // Fallback
+  return { text: 'Stock info unavailable', color: 'text-muted' }
+})
 </script>
 
 <template>
@@ -37,9 +68,10 @@ const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
     </div>
 
     <div class="flex-1 p-4">
+      <!-- Product title -->
       <div class="text-xs uppercase text-gray-400 mb-1">{{ product.category }}</div>
       <h3 class="font-bold text-lg mb-2">{{ product.title }}</h3>
-
+      <!-- Product rating -->
       <div class="flex items-center gap-1 mb-2">
         <template v-for="i in renderStars(product.rating).fullStars" :key="`full-${i}`">
           <Star class="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -51,13 +83,16 @@ const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
         </template>
         <span class="text-sm text-gray-600 ml-1">({{ product.reviews }} reviews)</span>
       </div>
-
-      <p class="text-sm text-gray-600">{{ product.description }}</p>
+      <!-- Product description -->
+      <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
     </div>
 
     <div class="w-1/4 p-4 flex flex-col items-center justify-center bg-gray-100 border-l border-gray-200">
       <div class="text-2xl font-bold text-green-600 mb-1">{{ formatPrice(product.price) }}</div>
       <div class="text-xs text-gray-400 mb-4">VAT included.</div>
+      <div :class="['text-sm font-medium', stockInfo.color]">
+        {{ stockInfo.text }}
+      </div>
     </div>
   </div>
 </template>
