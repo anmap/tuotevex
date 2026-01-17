@@ -9,13 +9,12 @@ const props = defineProps<{
   product: Product
 }>()
 
-const imageSrc = ref(props.product.image || fallbackImage)
+const imageSrc = ref(props.product.images[0] || fallbackImage)
 
+// If the image fails to load, also use the fallback image
 const handleImageError = () => {
   imageSrc.value = fallbackImage
 }
-
-const isFallbackImage = computed(() => imageSrc.value === fallbackImage)
 
 const thresholds = [
   { min: 100, text: '+100' },
@@ -54,7 +53,7 @@ const stockInfo = computed(() => {
     <div
       class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center border-b md:border-r border-gray-300">
       <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
-        :class="isFallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
+        :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
     </div>
 
     <div class="flex-1 p-4 flex flex-col">

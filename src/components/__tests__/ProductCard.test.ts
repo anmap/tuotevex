@@ -12,7 +12,7 @@ const mockProduct = {
   rating: 4.5,
   reviews: 856,
   description: 'Instant lash lift and ultra volume with a deep black finish.',
-  image: '/path/to/image.jpg',
+  images: ['/path/to/image.jpg'],
   stock: 100,
 }
 
@@ -100,7 +100,7 @@ describe('ProductCard', () => {
   it('uses fallback image when product image is not available', () => {
     const productWithoutImage = {
       ...mockProduct,
-      image: '',
+      images: [],
     }
     const wrapper = mount(ProductCard, {
       props: { product: productWithoutImage },
