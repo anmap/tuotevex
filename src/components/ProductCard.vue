@@ -61,9 +61,8 @@ const stockInfo = computed(() => {
 <template>
   <article class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48">
     <div class="w-full h-48 md:h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
-      <img :src="imageSrc" :alt="`Image of ${product.title}`"
-        :class="isFallbackImage ? 'w-24 h-24 object-contain' : 'w-full h-full object-contain md:object-cover'"
-        @error="handleImageError" />
+      <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
+        :class="isFallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
     </div>
 
     <div class="flex-1 p-4 flex flex-col">
