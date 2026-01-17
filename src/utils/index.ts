@@ -7,7 +7,7 @@ export const formatPrice = (price: number): string => {
 
 export const renderStars = (rating: number) => {
   const fullStars = Math.floor(rating)
-  const hasHalfStar = rating % 1 !== 0
+  const hasHalfStar = !Number.isInteger(rating)
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
 
   return { fullStars, hasHalfStar, emptyStars }
