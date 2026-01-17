@@ -8,6 +8,6 @@ export interface Product {
   rating: number
   reviews: number
   description: string
-  image?: string
+  images: string[]
   stock: number
 }
