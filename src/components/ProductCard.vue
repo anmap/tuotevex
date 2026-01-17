@@ -48,8 +48,11 @@ const stockInfo = computed(() => {
 </script>
 
 <template>
-  <article class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48">
-    <div class="w-full h-48 md:h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
+  <!-- Tab index 0 is used to make the article focusable -->
+  <article tabindex="0"
+    class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow">
+    <div
+      class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center border-b md:border-r border-gray-300">
       <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
         :class="isFallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
     </div>
@@ -77,7 +80,7 @@ const stockInfo = computed(() => {
 
     <div
       class="w-full md:w-1/4 p-4 flex flex-row md:flex-col items-center justify-between md:justify-center bg-gray-100 border-t md:border-t-0 md:border-l border-gray-300">
-      <div class="flex flex-col items-center md:items-center">
+      <div class="flex flex-col items-center">
         <div class="text-2xl font-bold text-primary mb-1">{{ formatPrice(product.price) }}</div>
         <div class="text-xs text-gray-700 mb-4 hidden md:block">VAT included.</div>
       </div>
