@@ -3,19 +3,7 @@ import { ref, computed } from 'vue'
 import { formatPrice } from '@/utils'
 import StarRating from '@/components/StarRating.vue'
 import fallbackImage from '@/assets/logo.svg'
-
-interface Product {
-  id: string
-  title: string
-  brand?: string
-  sku?: string
-  price: number
-  rating: number
-  reviews: number
-  description: string
-  image?: string
-  stock: number
-}
+import type { Product } from '@/types/product'
 
 const props = defineProps<{
   product: Product

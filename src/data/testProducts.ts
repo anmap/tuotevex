@@ -1,17 +1,4 @@
-// Product interface matching ProductCard component
-interface Product {
-  id: string
-  title: string
-  category: string
-  brand?: string
-  sku?: string
-  price: number
-  rating: number
-  reviews: number
-  description: string
-  image?: string
-  stock: number
-}
+import type { Product } from '@/types/product'
 
 // Test products generated from JSON data
 export const testProducts: Product[] = [
