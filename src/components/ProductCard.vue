@@ -55,7 +55,6 @@ const stockInfo = computed(() => {
       <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
         :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
     </div>
-
     <div class="flex-1 p-4 flex flex-col">
       <!-- Product brand -->
       <div class="text-sm mb-1" :class="product.brand ? 'text-gray-700' : 'text-gray-400 italic'"
@@ -71,12 +70,11 @@ const stockInfo = computed(() => {
       <!-- Product rating -->
       <div class="flex items-center gap-1 mb-2" role="img" :aria-label="`Rating: ${product.rating} out of 5 stars`">
         <StarRating :rating="product.rating" />
-        <span class="text-sm text-gray-700 ml-1">({{ product.reviews }} reviews)</span>
+        <span class="text-sm text-gray-700 ml-1">({{ product.reviews.length }} reviews)</span>
       </div>
       <!-- Product description -->
       <p class="text-sm text-gray-700 mb-2 flex-1">{{ product.description }}</p>
     </div>
-
     <div
       class="w-full md:w-1/4 p-4 flex flex-row md:flex-col items-center justify-between md:justify-center bg-gray-100 border-t md:border-t-0 md:border-l border-gray-300">
       <div class="flex flex-col items-center">
