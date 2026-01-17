@@ -14,7 +14,7 @@ const goBack = () => {
 </script>
 
 <template>
-  <main class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4"
+  <div class="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4"
     aria-labelledby="not-found-heading">
     <div class="text-center">
       <!-- Screen reader announcement -->
@@ -58,5 +58,5 @@ const goBack = () => {
         </RouterLink>
       </div>
     </div>
-  </main>
+  </div>
 </template>
