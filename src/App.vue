@@ -4,7 +4,7 @@ import NavBar from '@/components/NavBar.vue'
 </script>
 
 <template>
-  <header>
+  <header class="sticky top-0 z-50">
     <NavBar />
   </header>
   <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">

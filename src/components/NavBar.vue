@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar.vue'
 </script>
 
 <template>
-  <nav aria-label="Main navigation" class="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
+  <nav aria-label="Main navigation" class="w-full border-b border-gray-200 bg-white/95 backdrop-blur shadow-sm">
     <div class="mx-auto w-full max-w-7xl px-4 py-3 sm:flex sm:items-center sm:gap-4">
       <div class="flex items-center justify-between gap-3 sm:flex-1">
         <RouterLink to="/" class="flex items-center select-none">
