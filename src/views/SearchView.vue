@@ -42,7 +42,10 @@ const { data: searchData, isLoading, error } = useQuery({
     </div>
     <template v-else>
       <h1 class="mb-6 text-3xl font-bold">
-        Search Results for <span class="text-primary">"{{ searchQuery }}"</span>
+        Search Results for <span class="text-primary">"{{ searchQuery }}"</span>&nbsp;
+        <span v-if="searchData?.total && searchData.total > 0">
+          ({{ searchData.total }} {{ searchData.total === 1 ? 'product' : 'products' }})
+        </span>
       </h1>
 
       <div v-if="isLoading" class="space-y-4">
