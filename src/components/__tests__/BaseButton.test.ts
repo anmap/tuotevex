@@ -71,7 +71,7 @@ describe('BaseButton', () => {
       const button = wrapper.find('button')
       expect(button.attributes('disabled')).toBeDefined()
       expect(button.classes()).toContain('opacity-50')
-      expect(button.classes()).toContain('cursor-not-allowed')
+      expect(button.classes()).toContain('!cursor-not-allowed')
     })
   })
 
