@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { formatPrice } from '@/utils'
 import StarRating from '@/components/StarRating.vue'
+import AnimatedSkeleton from '@/components/AnimatedSkeleton.vue'
 import fallbackImage from '@/assets/logo.svg'
 import type { Product } from '@/types/product'
 
@@ -10,9 +11,15 @@ const props = defineProps<{
 }>()
 
 const imageSrc = ref(props.product.images[0] || fallbackImage)
+const imageLoading = ref(true)
+
+const handleImageLoad = () => {
+  imageLoading.value = false
+}
 
 // If the image fails to load, also use the fallback image
 const handleImageError = () => {
+  imageLoading.value = false
   imageSrc.value = fallbackImage
 }
 
@@ -50,8 +57,10 @@ const stockInfo = computed(() => {
   <article
     class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow">
     <div class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
-      <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
-        :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
+      <AnimatedSkeleton v-if="imageLoading" class="w-36 h-36" />
+      <img v-show="!imageLoading" :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
+        :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @load="handleImageLoad"
+        @error="handleImageError" />
     </div>
     <div class="flex-1 py-4 px-6 flex flex-col">
       <!-- Product brand -->
