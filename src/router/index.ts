@@ -9,14 +9,19 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue'),
+      beforeEnter: (to, _from, next) => {
+        // If route has no search query, redirect to home
+        if (!to.query.q) {
+          next({ path: '/' })
+        } else {
+          next()
+        }
+      },
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',

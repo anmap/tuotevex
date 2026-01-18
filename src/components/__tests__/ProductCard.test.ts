@@ -2,6 +2,17 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ProductCard from '@/components/ProductCard.vue'
 import fallbackImage from '@/assets/logo.svg'
+import type { Review } from '@/types/product'
+
+const createMockReviews = (count: number): Review[] => {
+  return Array.from({ length: count }, (_, i) => ({
+    rating: 4.5,
+    comment: `Review ${i + 1}`,
+    date: '2024-01-01',
+    reviewerName: `Reviewer ${i + 1}`,
+    reviewerEmail: `reviewer${i + 1}@example.com`,
+  }))
+}
 
 const mockProduct = {
   id: '1',
@@ -10,9 +21,9 @@ const mockProduct = {
   sku: 'BEA-001-UVIM',
   price: 12.50,
   rating: 4.5,
-  reviews: 856,
+  reviews: createMockReviews(856),
   description: 'Instant lash lift and ultra volume with a deep black finish.',
-  image: '/path/to/image.jpg',
+  images: ['/path/to/image.jpg'],
   stock: 100,
 }
 
@@ -100,7 +111,7 @@ describe('ProductCard', () => {
   it('uses fallback image when product image is not available', () => {
     const productWithoutImage = {
       ...mockProduct,
-      image: '',
+      images: [],
     }
     const wrapper = mount(ProductCard, {
       props: { product: productWithoutImage },

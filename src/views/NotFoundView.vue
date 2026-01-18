@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, useRouter } from 'vue-router'
 import { Home, Link2Off, ArrowLeft } from 'lucide-vue-next'
+import BaseButton from '@/components/BaseButton.vue'
 
 const router = useRouter()
 
@@ -44,16 +45,16 @@ const goBack = () => {
 
       <!-- Action buttons -->
       <div class="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-        <button type="button" @click="goBack"
-          class="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-6 py-3 text-gray-700 transition-colors hover:bg-gray-50 focus-visible:outline focus-visible:outline-offset-2">
+        <BaseButton variant="secondary" @click="goBack">
           <ArrowLeft class="h-5 w-5" aria-hidden="true" />
           <span>Go Back</span>
-        </button>
+        </BaseButton>
 
-        <RouterLink to="/"
-          class="flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-white transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2">
-          <Home class="h-5 w-5" aria-hidden="true" />
-          <span>Back to Homepage</span>
+        <RouterLink to="/" class="inline-flex">
+          <BaseButton>
+            <Home class="h-5 w-5" aria-hidden="true" />
+            <span>Back to Homepage</span>
+          </BaseButton>
         </RouterLink>
       </div>
     </div>

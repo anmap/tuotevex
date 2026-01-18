@@ -1,3 +1,11 @@
+export interface Review {
+  rating: number
+  comment: string
+  date: string
+  reviewerName: string
+  reviewerEmail: string
+}
+
 export interface Product {
   id: string
   title: string
@@ -6,8 +14,8 @@ export interface Product {
   sku?: string
   price: number
   rating: number
-  reviews: number
+  reviews: Review[]
   description: string
-  image?: string
+  images: string[]
   stock: number
 }
