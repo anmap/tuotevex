@@ -54,8 +54,7 @@ const stockInfo = computed(() => {
 </script>
 
 <template>
-  <article
-    class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow">
+  <article class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48">
     <div class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
       <AnimatedSkeleton v-if="imageLoading" class="w-36 h-36" />
       <img v-show="!imageLoading" :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
