@@ -10,7 +10,7 @@ import { normalizeQueryValue } from '@/utils'
  * Automatically updates the route as the search value changes (debounced),
  * and keeps the search value in sync when the query changes (e.g., via browser navigation).
  *
- * Usage: const { searchValue } = useSearchQuerySync()
+ * Usage: const { searchQuery } = useSearchQuerySync()
  */
 export const useSearchQuerySync = () => {
   const router = useRouter()

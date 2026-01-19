@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 import SearchBar from '@/components/molecules/SearchBar.vue'
 import { useSearchQuerySync } from '@/composables/useSearchQuerySync';
 
-const { searchValue } = useSearchQuerySync()
+const { searchQuery } = useSearchQuerySync()
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const { searchValue } = useSearchQuerySync()
       </div>
 
       <div class="mt-3 w-full sm:mt-0 sm:flex-1">
-        <SearchBar v-model="searchValue" />
+        <SearchBar v-model="searchQuery" />
       </div>
     </div>
   </nav>
