@@ -91,7 +91,10 @@ describe('SearchView', () => {
   const createWrapper = () => {
     const router = createRouter({
       history: createWebHistory(),
-      routes: [{ path: '/search', component: SearchView }],
+      routes: [
+        { path: '/', component: { template: '<div />' } },
+        { path: '/search', component: SearchView },
+      ],
     })
 
     return mount(SearchView, {

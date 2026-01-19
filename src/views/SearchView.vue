@@ -72,7 +72,7 @@ useIntersectionObserver(
       <p class="mb-8 text-slate-600">
         Try checking your spelling or use more general keywords.
       </p>
-      <BaseButton to="/" disabled>
+      <BaseButton to="/">
         <Home class="h-5 w-5" aria-hidden="true" />
         Go to Homepage
       </BaseButton>
