@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { useIntersectionObserver } from '@vueuse/core'
@@ -37,6 +37,11 @@ const allProducts = computed(() => searchData.value?.pages.flatMap((page) => pag
 
 // Total results is the total number of products across all pages
 const totalResults = computed(() => searchData.value?.pages[0]?.total ?? 0)
+
+// Scroll to top when search query changes
+watch(searchQuery, () => {
+  window.scrollTo({ top: 0, behavior: 'instant' })
+})
 
 // Sentinel element for infinite scroll detection
 const sentinelRef = ref<HTMLElement | null>(null)
