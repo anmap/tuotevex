@@ -1,54 +1,37 @@
-# tuotevex
+# TuoteVex
 
-This template should help get you started developing with Vue 3 in Vite.
+A product search application built with Vue 3 and Vite, using the [DummyJSON Products API](https://dummyjson.com/docs/products#products-search). The name is inspired by [AutoVex](https://autovex.fi) (and shamelessly the typefaces as well 😄).
 
-## Recommended IDE Setup
+## Features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Product Cards** - Display product image, brand, title, rating, description, price, and in stock status.
+- **Search Bar** - Search products with URL query sync for shareable links
+- **Infinite Scroll** - Automatically loads more results as you scroll
+- **Responsive** - Stylings and responsive layout with Tailwind CSS
+- **Accessibility (a11y)** - Skip links, ARIA labels, screen reader announcements, etc.
 
-## Recommended Browser Setup
+## Tech Stack
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+- Vue 3 + TypeScript
+- Vite
+- Tailwind CSS
+- TanStack Vue Query
+- VueUse
+- Vue Router
+- Vitest
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Getting Started
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## Scripts
 
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run test:unit` | Run unit tests |
+| `npm run lint` | Lint and fix files |
