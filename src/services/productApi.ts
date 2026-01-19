@@ -1,7 +1,7 @@
 import type { Product } from '@/types/product'
 
 export const API_BASE_URL = 'https://dummyjson.com/products'
-export const DEFAULT_LIMIT = 15
+export const DEFAULT_LIMIT = 20
 export const DEFAULT_SELECT = 'id,title,brand,sku,price,rating,reviews,description,images,stock,shippingInformation'
 
 export interface ProductsResponse {
