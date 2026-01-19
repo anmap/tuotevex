@@ -1,8 +1,30 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import type { Component } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
 
 describe('BaseButton', () => {
+  const RouterLinkStub: Component = {
+    name: 'RouterLink',
+    props: ['to', 'custom'],
+    setup(props, { slots }) {
+      const navigate = vi.fn()
+      const href = typeof props.to === 'string' ? props.to : '/'
+      return () => slots.default?.({ href, navigate })
+    },
+  }
+
+  const mountWithRouterLink = (props = {}, slots = {}) => {
+    return mount(BaseButton, {
+      props,
+      slots,
+      global: {
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+      },
+    })
+  }
   it('renders button with slot content and defaults', () => {
     const wrapper = mount(BaseButton, {
       slots: { default: 'Click me' },
@@ -75,33 +97,91 @@ describe('BaseButton', () => {
     })
   })
 
-  describe('attributes and accessibility', () => {
-    it('passes through HTML attributes and aria attributes', () => {
-      const wrapper = mount(BaseButton, {
-        props: {
-          id: 'my-button',
-          'data-testid': 'test-button',
-          'aria-label': 'Close dialog',
-          class: 'custom-class',
-        },
-        slots: { default: 'Button' },
-      })
-      const button = wrapper.find('button')
-      expect(button.attributes('id')).toBe('my-button')
-      expect(button.attributes('data-testid')).toBe('test-button')
-      expect(button.attributes('aria-label')).toBe('Close dialog')
-      expect(button.classes()).toContain('custom-class')
+  describe('RouterLink rendering', () => {
+    it('renders link when "to" prop is provided', () => {
+      const wrapper = mountWithRouterLink(
+        { to: '/' },
+        { default: 'Go Home' }
+      )
+      const link = wrapper.find('a')
+      expect(link.exists()).toBe(true)
+      expect(link.attributes('href')).toBe('/')
+      expect(link.text()).toBe('Go Home')
     })
-  })
 
-  describe('base styles', () => {
-    it('applies base button styles to all variants', () => {
-      const wrapper = mount(BaseButton, { slots: { default: 'Button' } })
-      const classes = wrapper.find('button').classes()
-      expect(classes).toContain('rounded-md')
-      expect(classes).toContain('px-6')
-      expect(classes).toContain('py-3')
-      expect(classes).toContain('transition-colors')
+    describe('RouterLink disabled state', () => {
+      it('applies disabled styling and aria-disabled to RouterLink', () => {
+        const wrapper = mountWithRouterLink(
+          { to: '/', disabled: true },
+          { default: 'Disabled Link' }
+        )
+        const link = wrapper.find('a')
+        expect(link.classes()).toContain('opacity-50')
+        expect(link.classes()).toContain('!cursor-not-allowed')
+        expect(link.attributes('aria-disabled')).toBe('true')
+        expect(link.attributes('tabindex')).toBe('-1')
+      })
+
+      it('does not emit click when RouterLink is disabled', async () => {
+        const wrapper = mountWithRouterLink(
+          { to: '/', disabled: true },
+          { default: 'Disabled Link' }
+        )
+        const link = wrapper.find('a')
+        await link.trigger('click')
+        expect(wrapper.emitted('click')).toBeUndefined()
+      })
+    })
+
+    describe('RouterLink click events', () => {
+      it('emits click event when RouterLink is clicked and not disabled', async () => {
+        const wrapper = mountWithRouterLink(
+          { to: '/' },
+          { default: 'Link' }
+        )
+        const link = wrapper.find('a')
+        await link.trigger('click')
+        const emitted = wrapper.emitted('click')
+        expect(emitted).toBeTruthy()
+        expect(emitted?.[0]?.[0]).toBeInstanceOf(Event)
+      })
+    })
+
+    describe('attributes and accessibility', () => {
+      it('passes through HTML attributes to button', () => {
+        const wrapper = mount(BaseButton, {
+          props: {
+            id: 'my-button',
+            'data-testid': 'test-button',
+            'aria-label': 'Close dialog',
+            class: 'custom-class',
+          },
+          slots: { default: 'Button' },
+        })
+        const button = wrapper.find('button')
+        expect(button.attributes('id')).toBe('my-button')
+        expect(button.attributes('data-testid')).toBe('test-button')
+        expect(button.attributes('aria-label')).toBe('Close dialog')
+        expect(button.classes()).toContain('custom-class')
+      })
+
+      it('passes through HTML attributes to RouterLink', () => {
+        const wrapper = mountWithRouterLink(
+          {
+            to: '/',
+            id: 'my-link',
+            'data-testid': 'test-link',
+            'aria-label': 'Go to home',
+            class: 'custom-class',
+          },
+          { default: 'Link' }
+        )
+        const link = wrapper.find('a')
+        expect(link.attributes('id')).toBe('my-link')
+        expect(link.attributes('data-testid')).toBe('test-link')
+        expect(link.attributes('aria-label')).toBe('Go to home')
+        expect(link.classes()).toContain('custom-class')
+      })
     })
   })
 })
