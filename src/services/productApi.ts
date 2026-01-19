@@ -15,12 +15,16 @@ export interface ProductsResponse {
 export const searchProducts = async ({
   query,
   skip = 0,
+  signal,
 }: {
-  query: string,
-  skip?: number,
-}
-): Promise<ProductsResponse> => {
-  const response = await fetch(`${API_BASE_URL}/search?q=${encodeURIComponent(query)}&select=${DEFAULT_SELECT}&limit=${DEFAULT_LIMIT}&skip=${skip}`)
+  query: string
+  skip?: number
+  signal?: AbortSignal
+}): Promise<ProductsResponse> => {
+  const response = await fetch(
+    `${API_BASE_URL}/search?q=${encodeURIComponent(query)}&select=${DEFAULT_SELECT}&limit=${DEFAULT_LIMIT}&skip=${skip}`,
+    { signal },
+  )
   if (!response.ok) {
     throw new Error('Failed to search products')
   }

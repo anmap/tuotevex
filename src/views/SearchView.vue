@@ -22,7 +22,7 @@ const {
   isFetchingNextPage,
 } = useInfiniteQuery({
   queryKey: computed(() => ['search', searchQuery.value]),
-  queryFn: ({ pageParam }) => searchProducts({ query: searchQuery.value, skip: pageParam }),
+  queryFn: ({ pageParam, signal }) => searchProducts({ query: searchQuery.value, skip: pageParam, signal }),
   initialPageParam: 0,
   getNextPageParam: (lastPage) => {
     const nextSkip = lastPage.skip + lastPage.limit
