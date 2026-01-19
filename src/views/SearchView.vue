@@ -64,7 +64,7 @@ useIntersectionObserver(
     <div v-if="!isLoading && !error && searchQuery && allProducts.length === 0"
       class="flex min-h-[60vh] flex-col items-center justify-center py-16 px-4">
       <div class="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-slate-100">
-        <SearchX class="h-12 w-12 text-slate-400" />
+        <SearchX class="h-12 w-12 text-slate-400" aria-hidden="true" />
       </div>
       <h2 class="mb-4 text-2xl font-bold text-slate-900">
         No results found for <span class="text-slate-700">"{{ searchQuery }}"</span>
