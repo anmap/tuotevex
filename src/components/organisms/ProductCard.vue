@@ -89,11 +89,13 @@ const stockInfo = computed(() => {
         <div class="text-3xl font-bold mb-1">{{ formatPrice(product.price) }}</div>
         <div class="text-xs text-gray-700 mb-4 hidden md:block">VAT included.</div>
       </div>
-      <div class="text-xs text-gray-600 mb-2" :aria-label="`Shipping: ${product.shippingInformation}`">
-        {{ product.shippingInformation }}
-      </div>
-      <div :class="['text-sm font-medium', stockInfo.color]" :aria-label="`Stock status: ${stockInfo.text}`">
-        {{ stockInfo.text }}
+      <div class="flex flex-col items-end md:items-center">
+        <div class="text-xs text-gray-600 mb-1 md:mb-2" :aria-label="`Shipping: ${product.shippingInformation}`">
+          {{ product.shippingInformation }}
+        </div>
+        <div :class="['text-sm font-medium', stockInfo.color]" :aria-label="`Stock status: ${stockInfo.text}`">
+          {{ stockInfo.text }}
+        </div>
       </div>
     </div>
   </article>
