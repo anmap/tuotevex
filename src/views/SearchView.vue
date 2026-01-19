@@ -38,6 +38,23 @@ const allProducts = computed(() => searchData.value?.pages.flatMap((page) => pag
 // Total results is the total number of products across all pages
 const totalResults = computed(() => searchData.value?.pages[0]?.total ?? 0)
 
+// Live message for screen readers
+const liveMessage = computed(() => {
+  if (!searchQuery.value) {
+    return ''
+  }
+  if (isLoading.value) {
+    return 'Loading results'
+  }
+  if (!error.value && allProducts.value.length === 0) {
+    return `No results found for ${searchQuery.value}`
+  }
+  if (totalResults.value > 0) {
+    return `${totalResults.value} ${totalResults.value === 1 ? 'product' : 'products'} found for ${searchQuery.value}`
+  }
+  return ''
+})
+
 // Scroll to top when search query changes
 watch(searchQuery, () => {
   window.scrollTo({ top: 0, behavior: 'instant' })
@@ -60,6 +77,9 @@ useIntersectionObserver(
 
 <template>
   <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      {{ liveMessage }}
+    </div>
     <!-- No result -->
     <div v-if="!isLoading && !error && searchQuery && allProducts.length === 0"
       class="flex min-h-[60vh] flex-col items-center justify-center py-16 px-4">
