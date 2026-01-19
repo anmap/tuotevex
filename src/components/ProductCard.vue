@@ -45,7 +45,7 @@ const stockInfo = computed(() => {
 
   const threshold = thresholds.find((t) => stock >= t.min)
   if (threshold) {
-    return { text: `${threshold.text} in stock`, color: 'text-primary' }
+    return { text: `${threshold.text} in stock`, color: 'text-primary-bold' }
   }
 
   // Fallback
@@ -63,7 +63,7 @@ const stockInfo = computed(() => {
     </div>
     <div class="flex-1 py-4 px-6 flex flex-col">
       <!-- Product brand -->
-      <div class="text-sm mb-1" :class="product.brand ? 'text-gray-700' : 'text-gray-400 italic'"
+      <div class="text-sm mb-1" :class="product.brand ? 'text-gray-700' : 'text-gray-500 italic'"
         :aria-label="product.brand ? `Brand: ${product.brand}` : 'No brand'">
         {{ product.brand || 'No brand' }}
       </div>
