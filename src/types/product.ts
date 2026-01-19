@@ -18,4 +18,5 @@ export interface Product {
   description: string
   images: string[]
   stock: number
+  shippingInformation?: string
 }

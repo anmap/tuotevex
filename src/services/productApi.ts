@@ -2,7 +2,7 @@ import type { Product } from '@/types/product'
 
 const API_BASE_URL = 'https://dummyjson.com/products'
 const DEFAULT_LIMIT = 15
-const DEFAULT_SELECT = 'id,title,brand,sku,price,rating,reviews,description,images,stock'
+const DEFAULT_SELECT = 'id,title,brand,sku,price,rating,reviews,description,images,stock,shippingInformation'
 
 export interface ProductsResponse {
   products: Product[]
