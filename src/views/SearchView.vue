@@ -29,6 +29,8 @@ const {
     return nextSkip < lastPage.total ? nextSkip : undefined
   },
   enabled: computed(() => searchQuery.value.length > 0),
+  staleTime: 1000 * 60 * 2,  // 2 min - user won't be here long anyway
+  gcTime: 1000 * 60 * 5,     // 5 min - free memory sooner for transient queries,
 })
 
 // Infinte query returns an array of pages,
