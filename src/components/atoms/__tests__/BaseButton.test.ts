@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { Component } from 'vue'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/atoms/BaseButton.vue'
 
 describe('BaseButton', () => {
   const RouterLinkStub: Component = {

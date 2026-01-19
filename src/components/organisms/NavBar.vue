@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
 import { watchDebounced } from '@vueuse/core'
-import SearchBar from '@/components/SearchBar.vue'
+import SearchBar from '@/components/molecules/SearchBar.vue'
 import { normalizeQueryValue } from '@/utils'
 
 const router = useRouter()

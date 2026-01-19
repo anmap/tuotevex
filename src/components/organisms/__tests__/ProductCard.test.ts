@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import ProductCard from '@/components/ProductCard.vue'
+import ProductCard from '@/components/organisms/ProductCard.vue'
 import fallbackImage from '@/assets/logo.svg'
 import type { Review } from '@/types/product'
 

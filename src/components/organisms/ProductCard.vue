@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { formatPrice } from '@/utils'
-import StarRating from '@/components/StarRating.vue'
-import AnimatedSkeleton from '@/components/AnimatedSkeleton.vue'
+import StarRating from '@/components/atoms/StarRating.vue'
+import AnimatedSkeleton from '@/components/atoms/AnimatedSkeleton.vue'
 import fallbackImage from '@/assets/logo.svg'
 import type { Product } from '@/types/product'
 

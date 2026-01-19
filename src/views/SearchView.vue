@@ -4,9 +4,9 @@ import { useRoute } from 'vue-router'
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { useIntersectionObserver } from '@vueuse/core'
 import { SearchX, Home, LoaderCircle } from 'lucide-vue-next'
-import ProductCard from '@/components/ProductCard.vue'
-import ProductCardSkeleton from '@/components/ProductCardSkeleton.vue'
-import BaseButton from '@/components/BaseButton.vue'
+import ProductCard from '@/components/organisms/ProductCard.vue'
+import ProductCardSkeleton from '@/components/molecules/ProductCardSkeleton.vue'
+import BaseButton from '@/components/atoms/BaseButton.vue'
 import { searchProducts } from '@/services/productApi'
 
 const route = useRoute()
