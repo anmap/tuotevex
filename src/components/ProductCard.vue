@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { formatPrice } from '@/utils'
 import StarRating from '@/components/StarRating.vue'
+import AnimatedSkeleton from '@/components/AnimatedSkeleton.vue'
 import fallbackImage from '@/assets/logo.svg'
 import type { Product } from '@/types/product'
 
@@ -10,9 +11,15 @@ const props = defineProps<{
 }>()
 
 const imageSrc = ref(props.product.images[0] || fallbackImage)
+const imageLoading = ref(true)
+
+const handleImageLoad = () => {
+  imageLoading.value = false
+}
 
 // If the image fails to load, also use the fallback image
 const handleImageError = () => {
+  imageLoading.value = false
   imageSrc.value = fallbackImage
 }
 
@@ -47,12 +54,13 @@ const stockInfo = computed(() => {
 </script>
 
 <template>
-  <!-- Tab index 0 is used to make the article focusable -->
-  <article tabindex="0"
+  <article
     class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow">
     <div class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
-      <img :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
-        :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @error="handleImageError" />
+      <AnimatedSkeleton v-if="imageLoading" class="w-36 h-36" />
+      <img v-show="!imageLoading" :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
+        :class="imageSrc === fallbackImage ? 'w-24 h-24' : 'w-full h-full'" @load="handleImageLoad"
+        @error="handleImageError" />
     </div>
     <div class="flex-1 py-4 px-6 flex flex-col">
       <!-- Product brand -->
@@ -77,7 +85,7 @@ const stockInfo = computed(() => {
     <div
       class="w-full md:w-1/4 p-4 flex flex-row md:flex-col items-center justify-between md:justify-center bg-gray-100">
       <div class="flex flex-col items-center">
-        <div class="text-2xl font-bold text-primary mb-1">{{ formatPrice(product.price) }}</div>
+        <div class="text-3xl font-bold mb-1">{{ formatPrice(product.price) }}</div>
         <div class="text-xs text-gray-700 mb-4 hidden md:block">VAT included.</div>
       </div>
       <div :class="['text-sm font-medium', stockInfo.color]" :aria-label="`Stock status: ${stockInfo.text}`">
