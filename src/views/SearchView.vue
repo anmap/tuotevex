@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { useIntersectionObserver } from '@vueuse/core'
 import { SearchX, Home, LoaderCircle } from 'lucide-vue-next'
@@ -29,8 +29,6 @@ const {
     return nextSkip < lastPage.total ? nextSkip : undefined
   },
   enabled: computed(() => searchQuery.value.length > 0),
-  staleTime: 1000 * 60 * 2,  // 2 min - user won't be here long anyway
-  gcTime: 1000 * 60 * 5,     // 5 min - free memory sooner for transient queries,
 })
 
 // Infinte query returns an array of pages,
@@ -74,12 +72,10 @@ useIntersectionObserver(
       <p class="mb-8 text-slate-600">
         Try checking your spelling or use more general keywords.
       </p>
-      <RouterLink to="/" class="inline-flex">
-        <BaseButton>
-          <Home class="h-5 w-5" aria-hidden="true" />
-          Go to Homepage
-        </BaseButton>
-      </RouterLink>
+      <BaseButton to="/" disabled>
+        <Home class="h-5 w-5" aria-hidden="true" />
+        Go to Homepage
+      </BaseButton>
     </div>
     <!-- Results -->
     <template v-else>

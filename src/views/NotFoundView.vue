@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { Home, Link2Off, ArrowLeft } from 'lucide-vue-next'
 import BaseButton from '@/components/BaseButton.vue'
 
@@ -50,12 +50,10 @@ const goBack = () => {
           <span>Go Back</span>
         </BaseButton>
 
-        <RouterLink to="/" class="inline-flex">
-          <BaseButton>
-            <Home class="h-5 w-5" aria-hidden="true" />
-            <span>Back to Homepage</span>
-          </BaseButton>
-        </RouterLink>
+        <BaseButton to="/">
+          <Home class="h-5 w-5" aria-hidden="true" />
+          <span>Back to Homepage</span>
+        </BaseButton>
       </div>
     </div>
   </div>
