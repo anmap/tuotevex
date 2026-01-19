@@ -1,38 +1,9 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { RouterLink } from 'vue-router'
-import { watchDebounced } from '@vueuse/core'
 import SearchBar from '@/components/molecules/SearchBar.vue'
-import { normalizeQueryValue } from '@/utils'
+import { useSearchQuerySync } from '@/composables/useSearchQuerySync';
 
-const router = useRouter()
-const route = useRoute()
-
-// Local ref for immediate UI updates (synced with route.query.q)
-const searchValue = ref<string>(normalizeQueryValue(route.query.q))
-
-// Debounced watch to update route path (with automatic cleanup on unmount)
-watchDebounced(
-  searchValue,
-  (value) => {
-    const trimmedValue = value.trim()
-    if (trimmedValue) {
-      router.push({ path: '/search', query: { q: trimmedValue } })
-    } else if (route.path === '/search') {
-      router.push({ path: '/' })
-    }
-  },
-  { debounce: 300 }
-)
-
-// Update search value when route query changes
-watch(() => route.query.q, (q) => {
-  const nextValue = normalizeQueryValue(q)
-  if (nextValue !== searchValue.value) {
-    searchValue.value = nextValue
-  }
-})
+const { searchQuery } = useSearchQuerySync()
 </script>
 
 <template>
@@ -48,7 +19,7 @@ watch(() => route.query.q, (q) => {
       </div>
 
       <div class="mt-3 w-full sm:mt-0 sm:flex-1">
-        <SearchBar v-model="searchValue" />
+        <SearchBar v-model="searchQuery" />
       </div>
     </div>
   </nav>

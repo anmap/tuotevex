@@ -1,14 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import type { Ref } from 'vue'
 import NavBar from '../NavBar.vue'
 
 // Mock vue-router
-const mockPush = vi.fn()
 const mockRoute: { path: string; query: { q?: string } } = { path: '/', query: {} }
 
 vi.mock('vue-router', () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: () => ({ push: vi.fn() }),
   useRoute: () => mockRoute,
   RouterLink: {
     name: 'RouterLink',
@@ -17,23 +15,12 @@ vi.mock('vue-router', () => ({
   },
 }))
 
-// Mock @vueuse/core - capture the callback for testing
-let watchDebouncedCallback: ((value: string) => void) | null = null
-
+// Mock @vueuse/core to avoid debounce timers in render tests
 vi.mock('@vueuse/core', () => ({
-  watchDebounced: (source: Ref<string>, callback: (value: string) => void) => {
-    watchDebouncedCallback = callback
-  },
+  watchDebounced: () => undefined,
 }))
 
 describe('NavBar', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-    mockRoute.path = '/'
-    mockRoute.query = {}
-    watchDebouncedCallback = null
-  })
-
   describe('rendering and accessibility', () => {
     it('renders accessible navigation with logo and home link', () => {
       const wrapper = mount(NavBar)
@@ -54,62 +41,6 @@ describe('NavBar', () => {
     it('renders SearchBar component', () => {
       const wrapper = mount(NavBar)
       expect(wrapper.findComponent({ name: 'SearchBar' }).exists()).toBe(true)
-    })
-  })
-
-  describe('search to route synchronization', () => {
-    it('navigates to /search with query when search value is non-empty', () => {
-      mount(NavBar)
-      watchDebouncedCallback?.('test query')
-
-      expect(mockPush).toHaveBeenCalledWith({
-        path: '/search',
-        query: { q: 'test query' },
-      })
-    })
-
-    it('trims whitespace from search value before navigating', () => {
-      mount(NavBar)
-      watchDebouncedCallback?.('  hello world  ')
-
-      expect(mockPush).toHaveBeenCalledWith({
-        path: '/search',
-        query: { q: 'hello world' },
-      })
-    })
-
-    it('navigates to home when search is cleared while on /search', () => {
-      mockRoute.path = '/search'
-      mount(NavBar)
-      watchDebouncedCallback?.('')
-
-      expect(mockPush).toHaveBeenCalledWith({ path: '/' })
-    })
-
-    it('navigates to home when search is only whitespace while on /search', () => {
-      mockRoute.path = '/search'
-      mount(NavBar)
-      watchDebouncedCallback?.('   ')
-
-      expect(mockPush).toHaveBeenCalledWith({ path: '/' })
-    })
-
-    it('does not navigate when search is empty and not on /search', () => {
-      mockRoute.path = '/'
-      mount(NavBar)
-      watchDebouncedCallback?.('')
-
-      expect(mockPush).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('route to search synchronization', () => {
-    it('initializes search value from route query param', () => {
-      mockRoute.query = { q: 'initial query' }
-      const wrapper = mount(NavBar)
-      const searchBar = wrapper.findComponent({ name: 'SearchBar' })
-
-      expect(searchBar.props('modelValue')).toBe('initial query')
     })
   })
 })

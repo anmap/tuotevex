@@ -79,13 +79,18 @@ const stockInfo = computed(() => {
         <span class="text-sm text-gray-700 ml-1">({{ product.reviews.length }} reviews)</span>
       </div>
       <!-- Product description -->
-      <p class="text-sm text-gray-700 mb-2 flex-1">{{ product.description }}</p>
+      <p class="text-sm text-gray-700 mb-2 flex-1 md:line-clamp-2">
+        {{ product.description }}
+      </p>
     </div>
     <div
       class="w-full md:w-1/4 p-4 flex flex-row md:flex-col items-center justify-between md:justify-center bg-gray-100">
       <div class="flex flex-col items-center">
         <div class="text-3xl font-bold mb-1">{{ formatPrice(product.price) }}</div>
         <div class="text-xs text-gray-700 mb-4 hidden md:block">VAT included.</div>
+      </div>
+      <div class="text-xs text-gray-600 mb-2" :aria-label="`Shipping: ${product.shippingInformation}`">
+        {{ product.shippingInformation }}
       </div>
       <div :class="['text-sm font-medium', stockInfo.color]" :aria-label="`Stock status: ${stockInfo.text}`">
         {{ stockInfo.text }}
