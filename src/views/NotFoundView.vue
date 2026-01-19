@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { Home, Link2Off, ArrowLeft } from 'lucide-vue-next'
-import BaseButton from '@/components/BaseButton.vue'
+import BaseButton from '@/components/atoms/BaseButton.vue'
 
 const router = useRouter()
 

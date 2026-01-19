@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import StarRating from '@/components/StarRating.vue'
+import StarRating from '@/components/atoms/StarRating.vue'
 
 describe('StarRating', () => {
   it('renders', () => {

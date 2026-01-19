@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AnimatedSkeleton from '@/components/AnimatedSkeleton.vue'
+import AnimatedSkeleton from '@/components/atoms/AnimatedSkeleton.vue'
 </script>
 
 <template>
