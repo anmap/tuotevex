@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useInfiniteQuery } from '@tanstack/vue-query'
 import { useIntersectionObserver } from '@vueuse/core'
 import { SearchX, Home, LoaderCircle } from 'lucide-vue-next'
@@ -29,8 +29,6 @@ const {
     return nextSkip < lastPage.total ? nextSkip : undefined
   },
   enabled: computed(() => searchQuery.value.length > 0),
-  staleTime: 1000 * 60 * 2,  // 2 min - user won't be here long anyway
-  gcTime: 1000 * 60 * 5,     // 5 min - free memory sooner for transient queries,
 })
 
 // Infinte query returns an array of pages,
@@ -39,6 +37,23 @@ const allProducts = computed(() => searchData.value?.pages.flatMap((page) => pag
 
 // Total results is the total number of products across all pages
 const totalResults = computed(() => searchData.value?.pages[0]?.total ?? 0)
+
+// Live message for screen readers
+const liveMessage = computed(() => {
+  if (!searchQuery.value) {
+    return ''
+  }
+  if (isLoading.value) {
+    return 'Loading results'
+  }
+  if (!error.value && allProducts.value.length === 0) {
+    return `No results found for ${searchQuery.value}`
+  }
+  if (totalResults.value > 0) {
+    return `${totalResults.value} ${totalResults.value === 1 ? 'product' : 'products'} found for ${searchQuery.value}`
+  }
+  return ''
+})
 
 // Scroll to top when search query changes
 watch(searchQuery, () => {
@@ -62,11 +77,14 @@ useIntersectionObserver(
 
 <template>
   <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+      {{ liveMessage }}
+    </div>
     <!-- No result -->
     <div v-if="!isLoading && !error && searchQuery && allProducts.length === 0"
       class="flex min-h-[60vh] flex-col items-center justify-center py-16 px-4">
       <div class="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-slate-100">
-        <SearchX class="h-12 w-12 text-slate-400" />
+        <SearchX class="h-12 w-12 text-slate-400" aria-hidden="true" />
       </div>
       <h2 class="mb-4 text-2xl font-bold text-slate-900">
         No results found for <span class="text-slate-700">"{{ searchQuery }}"</span>
@@ -74,12 +92,10 @@ useIntersectionObserver(
       <p class="mb-8 text-slate-600">
         Try checking your spelling or use more general keywords.
       </p>
-      <RouterLink to="/" class="inline-flex">
-        <BaseButton>
-          <Home class="h-5 w-5" aria-hidden="true" />
-          Go to Homepage
-        </BaseButton>
-      </RouterLink>
+      <BaseButton to="/">
+        <Home class="h-5 w-5" aria-hidden="true" />
+        Go to Homepage
+      </BaseButton>
     </div>
     <!-- Results -->
     <template v-else>

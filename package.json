@@ -36,6 +36,7 @@
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "~10.6.2",
+    "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "jiti": "^2.6.1",
     "jsdom": "^27.4.0",
     "npm-run-all2": "^8.0.4",

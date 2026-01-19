@@ -10,7 +10,7 @@ import { Sparkles } from 'lucide-vue-next'
         <img src="@/assets/logo.svg" alt="" class="mx-auto mb-6 h-24 w-24 sm:h-36 sm:w-36" />
 
         <div
-          class="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
+          class="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary-bold">
           <Sparkles class="h-4 w-4 shrink-0" aria-hidden="true" />
           <span>Discover amazing random products!</span>
         </div>

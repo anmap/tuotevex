@@ -45,7 +45,7 @@ const stockInfo = computed(() => {
 
   const threshold = thresholds.find((t) => stock >= t.min)
   if (threshold) {
-    return { text: `${threshold.text} in stock`, color: 'text-primary' }
+    return { text: `${threshold.text} in stock`, color: 'text-primary-bold' }
   }
 
   // Fallback
@@ -54,8 +54,7 @@ const stockInfo = computed(() => {
 </script>
 
 <template>
-  <article
-    class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-shadow">
+  <article class="flex flex-col md:flex-row border border-gray-300 bg-white rounded-lg mb-6 overflow-hidden md:h-48">
     <div class="w-full h-48 md:w-48 bg-gray-50 shrink-0 flex items-center justify-center">
       <AnimatedSkeleton v-if="imageLoading" class="w-36 h-36" />
       <img v-show="!imageLoading" :src="imageSrc" :alt="`Image of ${product.title}`" class="object-contain"
@@ -64,7 +63,7 @@ const stockInfo = computed(() => {
     </div>
     <div class="flex-1 py-4 px-6 flex flex-col">
       <!-- Product brand -->
-      <div class="text-sm mb-1" :class="product.brand ? 'text-gray-700' : 'text-gray-400 italic'"
+      <div class="text-sm mb-1" :class="product.brand ? 'text-gray-700' : 'text-gray-500 italic'"
         :aria-label="product.brand ? `Brand: ${product.brand}` : 'No brand'">
         {{ product.brand || 'No brand' }}
       </div>
@@ -75,7 +74,7 @@ const stockInfo = computed(() => {
         {{ product.sku }}
       </div>
       <!-- Product rating -->
-      <div class="flex items-center gap-1 mb-2" role="img" :aria-label="`Rating: ${product.rating} out of 5 stars`">
+      <div class="flex items-center gap-1 mb-2">
         <StarRating :rating="product.rating" />
         <span class="text-sm text-gray-700 ml-1">({{ product.reviews.length }} reviews)</span>
       </div>

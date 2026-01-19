@@ -10,24 +10,26 @@ describe('SearchBar', () => {
 
   it('has an accessible search input', () => {
     const wrapper = mount(SearchBar)
-    const label = wrapper.find('label[for="search-input"]')
     const input = wrapper.find('input#search-input')
 
-    expect(label.exists()).toBe(true)
     expect(input.exists()).toBe(true)
     expect(input.attributes('type')).toBe('search')
     expect(input.attributes('placeholder')).toBe('Search products')
+    expect(input.attributes('aria-label')).toBe('Search products')
+    expect(input.attributes('autocomplete')).toBe('off')
   })
 
-  it('emits updates when typing', async () => {
+  it('binds v-model value correctly', async () => {
     const wrapper = mount(SearchBar, {
       props: {
-        modelValue: '',
+        modelValue: 'initial value',
       },
     })
     const input = wrapper.find('input#search-input')
 
-    await input.setValue('test query')
-    expect(wrapper.emitted('update:modelValue')).toEqual([['test query']])
+    expect((input.element as HTMLInputElement).value).toBe('initial value')
+
+    await input.setValue('updated value')
+    expect(wrapper.emitted('update:modelValue')).toEqual([['updated value']])
   })
 })

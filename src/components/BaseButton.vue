@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
+import { RouterLink, type RouteLocationRaw } from 'vue-router'
 
 type ButtonVariant = 'primary' | 'secondary'
 type ButtonType = 'button' | 'submit' | 'reset'
@@ -8,6 +9,7 @@ interface Props {
   variant?: ButtonVariant
   type?: ButtonType
   disabled?: boolean
+  to?: RouteLocationRaw
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,10 +22,21 @@ const emit = defineEmits<{
   click: [event: MouseEvent]
 }>()
 
+const handleLinkClick = (event: MouseEvent, navigate: (event: MouseEvent) => void) => {
+  if (props.disabled) {
+    event.preventDefault()
+    event.stopPropagation()
+    return
+  }
+
+  emit('click', event)
+  navigate(event)
+}
+
 const attrs = useAttrs()
 
 const variantClasses = computed(() => {
-  const baseClasses = 'flex items-center gap-2 rounded-md px-6 py-3 cursor-pointer transition-colors'
+  const baseClasses = 'flex items-center gap-2 rounded-md px-6 py-3 transition-colors'
 
   switch (props.variant) {
     case 'primary':
@@ -41,7 +54,13 @@ const disabledClasses = computed(() => {
 </script>
 
 <template>
-  <button :type="type" :disabled="disabled" :class="[variantClasses, disabledClasses, attrs.class]" v-bind="attrs"
+  <RouterLink v-if="to" :to="to" custom v-slot="{ href, navigate }">
+    <a :href="href" :class="[variantClasses, disabledClasses]" :aria-disabled="disabled ? 'true' : undefined"
+      :tabindex="disabled ? -1 : undefined" v-bind="attrs" @click="handleLinkClick($event, navigate)">
+      <slot />
+    </a>
+  </RouterLink>
+  <button v-else :type="type" :disabled="disabled" :class="[variantClasses, disabledClasses]" v-bind="attrs"
     @click="emit('click', $event)">
     <slot />
   </button>
