@@ -71,7 +71,7 @@ useIntersectionObserver(
       fetchNextPage()
     }
   },
-  { rootMargin: '200px' },
+  { rootMargin: '400px' },
 )
 </script>
 
