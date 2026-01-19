@@ -74,7 +74,7 @@ const stockInfo = computed(() => {
         {{ product.sku }}
       </div>
       <!-- Product rating -->
-      <div class="flex items-center gap-1 mb-2" role="img" :aria-label="`Rating: ${product.rating} out of 5 stars`">
+      <div class="flex items-center gap-1 mb-2">
         <StarRating :rating="product.rating" />
         <span class="text-sm text-gray-700 ml-1">({{ product.reviews.length }} reviews)</span>
       </div>
