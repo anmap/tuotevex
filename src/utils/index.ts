@@ -14,12 +14,13 @@ export const formatPrice = (price: number): string => {
 /**
  * Render the number of stars for a given rating.
  *
- * @param rating - The rating to render stars for.
+ * @param rating - The rating to render stars for (clamped to 0-5).
  * @returns An object containing the number of full stars, half stars, and empty stars.
  */
 export const renderStars = (rating: number) => {
-  const fullStars = Math.floor(rating)
-  const hasHalfStar = !Number.isInteger(rating)
+  const clampedRating = Math.min(5, Math.max(0, rating))
+  const fullStars = Math.floor(clampedRating)
+  const hasHalfStar = !Number.isInteger(clampedRating)
   const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0)
 
   return { fullStars, hasHalfStar, emptyStars }
