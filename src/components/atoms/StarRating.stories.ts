@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     rating: {
-      control: { type: 'range', min: 0, max: 5, step: 0.5 },
+      control: { type: 'range', min: 0, max: 5, step: 0.1 },
       description: 'The rating value from 0 to 5',
       table: {
         type: { summary: 'number' },
