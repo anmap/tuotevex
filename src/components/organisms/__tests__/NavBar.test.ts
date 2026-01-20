@@ -2,19 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NavBar from '../NavBar.vue'
 
-// Mock vue-router
-const mockRoute: { path: string; query: { q?: string } } = { path: '/', query: {} }
-
-vi.mock('vue-router', () => ({
-  useRouter: () => ({ push: vi.fn() }),
-  useRoute: () => mockRoute,
-  RouterLink: {
-    name: 'RouterLink',
-    template: '<a :href="to.path || to"><slot /></a>',
-    props: ['to'],
-  },
-}))
-
 // Mock @vueuse/core to avoid debounce timers in render tests
 vi.mock('@vueuse/core', () => ({
   watchDebounced: () => undefined,
