@@ -27,6 +27,22 @@ describe('utils', () => {
         emptyStars: 0,
       })
     })
+
+    it('clamps rating above 5 to 5', () => {
+      expect(renderStars(10)).toEqual({
+        fullStars: 5,
+        hasHalfStar: false,
+        emptyStars: 0,
+      })
+    })
+
+    it('clamps rating below 0 to 0', () => {
+      expect(renderStars(-3)).toEqual({
+        fullStars: 0,
+        hasHalfStar: false,
+        emptyStars: 5,
+      })
+    })
   })
 
   describe('normalizeQueryValue', () => {

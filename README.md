@@ -29,9 +29,10 @@ npm run dev
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run test:unit` | Run unit tests |
-| `npm run lint` | Lint and fix files |
+| Command             | Description                 |
+| ------------------- | --------------------------- |
+| `npm run dev`       | Start development server    |
+| `npm run build`     | Build for production        |
+| `npm run test:unit` | Run unit tests              |
+| `npm run lint`      | Lint and fix files          |
+| `npm run storybook` | Start Storybook UI workshop |
